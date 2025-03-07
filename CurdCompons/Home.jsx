@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+ 
 
 const Home = () => {
   const [data,setData]=useState([]);
@@ -9,7 +10,16 @@ const Home = () => {
     .then(response=>setData(response.data))
     .catch(error=>console.error("error in fetching: ",error))
   },[])
-  console.log(data)
+  
+  const handleDelete=(id)=>{
+    const confirm=window.confirm("Are you sure...!")
+    if(confirm){
+      axios.delete(`http://localhost:3000/users/${id}`)
+      .then(response=>location.reload())
+      .catch(error=>console.error(error))
+    }
+  }
+
   return (
     <div>
       <h1>Table</h1>
@@ -35,9 +45,9 @@ const Home = () => {
               <td>{users.email}</td>
               <td>{users.phone}</td>
               <td>
-                <button>Read</button>
-                <button>Edit</button>
-                <button>delete</button>
+                <button><Link to={`/read/${users.id}`}>Read</Link></button>
+                <button><Link to={`/update/${users.id}`}>Edit</Link></button>
+                <button onClick={(e)=>handleDelete(users.id)}>delete</button>
               </td>
             </tr>
           ))}
