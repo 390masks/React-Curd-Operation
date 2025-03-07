@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const Update = () => {
-  // const [data, setData] = useState({});
+ 
   const { id } = useParams(); 
 
   const [values,setValues]=useState({
